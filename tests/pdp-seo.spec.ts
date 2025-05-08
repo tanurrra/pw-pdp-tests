@@ -7,6 +7,7 @@ const expectedPriceSinglePurchase = '3.00'; //better to get value from DB based 
 const expectedCurrecySymbol = '$';
 
 test.describe('Product Detail Page (PDP) - SEO', () => {
+    // todo - locators needs to be moved to page object; more tests need to be added
 
     test.beforeEach(async ({ page }) => {
         await page.goto(PDP_URL);
@@ -38,11 +39,43 @@ test.describe('Product Detail Page (PDP) - SEO', () => {
 
     test('Validate robots meta tag allows indexing', async ({ page }) => {
         const robotsContent = await page.locator('meta[name="robots"]').getAttribute('content');
-        // It's valid to not have the tag (default is index, follow)
         if (robotsContent) {
             const contentLower = robotsContent.toLowerCase();
             expect(contentLower).not.toContain('noindex');
             expect(contentLower).not.toContain('nofollow');
         }
     });
+
+    test('Validate Open Graph meta tags are present and valid', async ({ page }) => {
+        const ogTitle = await page.locator('meta[property="og:title"]').getAttribute('content');
+        const ogDesc = await page.locator('meta[property="og:description"]').getAttribute('content');
+        const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
+        const ogUrl = await page.locator('meta[property="og:url"]').getAttribute('content');
+    
+        expect(ogTitle).toBeTruthy();
+        expect(ogDesc).toBeTruthy();
+        expect(ogImage).toMatch(/^https?:\/\//);
+        expect(ogUrl).toBe(PDP_URL);
+      });
+
+      test('Validate Twitter card meta tags are present', async ({ page }) => {
+        const twitterCard = await page.locator('meta[name="twitter:card"]').getAttribute('content');
+        const twitterTitle = await page.locator('meta[name="twitter:title"]').getAttribute('content');
+        const twitterDesc = await page.locator('meta[name="twitter:description"]').getAttribute('content');
+        const twitterImage = await page.locator('meta[name="twitter:image"]').getAttribute('content');
+    
+        expect(twitterCard).toBeTruthy();
+        expect(twitterTitle).toBeTruthy();
+        expect(twitterDesc).toBeTruthy();
+        expect(twitterImage).toMatch(/^https?:\/\//);
+      }); 
+
+      test('Validate clean and descriptive URL structure', async ({ page }) => {
+        const currentURL = page.url();
+        expect(currentURL).toBe(PDP_URL);
+        expect(currentURL).not.toContain('?');
+        expect(currentURL).not.toContain('=');
+        expect(currentURL).toMatch(/\/product\/christmas-tree-lantern-bundle\/?$/);
+      });
+    
 });
