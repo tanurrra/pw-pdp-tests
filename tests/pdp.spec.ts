@@ -6,7 +6,7 @@ const expectedTitle = 'Christmas Tree Lantern Bundle';
 const expectedPriceSinglePurchase = '3.00'; //better to get value from DB based on country; need to check format of local currency
 const expectedCurrecySymbol = '$';
 
-test.describe('Product Detail Page (PDP) - Functional Tests', () => {
+test.describe('Product Detail Page (PDP)', () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto(PDP_URL);
