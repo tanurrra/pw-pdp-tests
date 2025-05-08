@@ -8,10 +8,11 @@ functionality of the page, but focus on the most important elements and function
 product images, description etc) - the rest is up to you!
 Additionally, we would like you to focus on testing SEO related page functionality.
 
-## Test cases (short version)
+## Test cases (some ideas)
+
+PDP page has many components and sections, such as product title, price (for single purchace, free trial offer for guest users/users wtihout subscription), product images (carousel), reviews and rating, designer profile, tags, "more from this designer" section,  social media share buttons, add to favorites button, "also viewed" section etc. And shared components such as breadcrumbs, navigation, header and footer, banners etc. 
 
 1. Verify Product Title and Description
-Precondition: User navigates to the PDP.
 Verify the product title matches "Christmas Tree Lantern Bundle".
 Verify that the product description is present and readable.
 
@@ -34,16 +35,17 @@ Button should redirect to login or pricing page.
 5. Verify Add to Favorites/Wishlist Button
 Not logged in:
 Clicking prompts login or signup.
+Logged in: Clicking promts adds product to favorites list, maybe counter of favorites for product increased, maybe user icon is displayed in "added to favorites" section. 
 
 6. Verify License Information
 Ensure license type is visible and linked (e.g., Commercial License).
-Clicking it should open license details in a new tab or modal.
+Clicking it should open license details in a new tab.
 
 7. Check Product Metadata
 Verify author/designer name is correct and links to their profile.
 Validate number of downloads, favorites, and ratings (if shown).
 
-8. Related Products Section
+8. Recommendation Section ("People also viewed")
 Validate that similar or recommended products are shown.
 Each product card should be clickable and open the correct PDP.
 
@@ -65,8 +67,6 @@ Validate page layout on mobile, tablet, and desktop viewports.
 13. Access Control
 Try accessing a download URL directly without logging in — should redirect or deny.
 
-14. Broken Image or File
-Simulate missing product images or download file — proper error message or fallback should appear.
 
 ### Assumptions:
 - only English language tested with single currency, with fixed text
@@ -74,7 +74,16 @@ Simulate missing product images or download file — proper error message or fal
 ### Observed behavior:
 - when swithcing currency back to USD $ from top menu, product detail box displays (discounted) price for single-purchase and button "Add to cart", next to text "Free" and button "Download for free". For EUR and GBR single-purchace 
 
-## How to run locally 
+# Run tests
+### How to install
 
-## How to run in GitHub
+Make sure you have npm installed. 
+Run ```npm install``` 
 
+### How to run locally 
+
+Run ```npx playwright test``` or with `--ui` option to run in [UI mode](https://playwright.dev/docs/test-ui-mode#running-your-tests):  ```npx playwright test --ui```
+
+### How to run in GitHub
+Project contains playwright.yml file inside a .github/workflows folder containing everything to tests run on each push and pull request into the main/master branch.
+In GitHub, click on the Actions tab to see the workflows. Here you will see if your tests have passed or failed (see [docs](https://playwright.dev/docs/ci-intro#setting-up-github-actions)).

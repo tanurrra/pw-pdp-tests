@@ -11,6 +11,8 @@ export class PDPPage {
     readonly singlePurchasePrice: Locator;
     readonly thumbnails: Locator;
     readonly fotoramaFrame: Locator;
+    readonly productDescription: Locator;
+    readonly productTitle: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -18,7 +20,10 @@ export class PDPPage {
 
         this.fotoramaFrame = page.locator('//div[contains(@class, "fotorama__stage__frame") and contains(@class, "active")]');
         this.thumbnails = page.locator('div.fotorama__nav__frame');
-
+        
+        this.productTitle = page.locator('#product-title'); 
+        this.productDescription = page.locator('#single-product-description'); 
+        
         this.singlePurchasePriceContainer = page.locator('#product-price-usd');
         this.singlePurchaseCurrencySymbol = page.locator('#product-price-usd').locator('.woocommerce-Price-currencySymbol');
         this.singlePurchasePrice = page.locator('#product-price-usd').locator('.woocommerce-Price-amount.amount');
